@@ -1,0 +1,209 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Roboto, sans-serif;
+}
+a {
+    text-decoration: none;
+}
+
+body {
+    overflow: hidden;
+}
+
+/* Main Panel */
+.mainPanel {
+    display: flex;
+    justify-content: center;
+    width: 70%;
+    margin: 0 auto;
+}
+
+.block1, .block2 {
+    border: 2px solid black;
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.parMG, .parFL {
+    margin: 20px auto;
+}
+
+.star, .favStar {
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 5px;
+    left: 125px;
+    z-index: 2;
+    width: 30px;
+    height: 30px;
+    background-size: contain;
+}
+
+.favStar {
+    background-image: url(img/no-fav.png);
+}
+
+.star {
+    background-image: url(img/fav.png);
+}
+
+.noDiv {
+    display: none;
+}
+
+.imgMovie {
+    max-width: 100%;
+    /* height: 100%; */
+    height: auto;
+    object-fit: contain;
+}
+
+/* Block 1 */
+.block1 {
+    width: 70%;
+}
+
+.moviesGallery {
+    display: flex;
+    justify-content: space-around;
+    margin: 30px 0px;
+    flex-wrap: wrap;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    background-color: gray;
+    margin: 10px;
+    padding: 12px;
+    border-radius: 20px;
+    width: 150px;
+    height: 330px;
+}
+
+.nameMovie, .yearMovie {
+    margin: 5px auto;
+    text-align: center;
+}
+
+
+
+/* Block 2 */
+.block2 {
+    width: 30%;
+    background: #32e194;
+}
+
+.favoriteList {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+}
+
+.listItem {
+    margin: 10px 0px;
+}
+
+
+
+/* Modal */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1050;
+    display: none;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+.show {
+    display: block;
+}
+.hide {
+    display: none;
+}
+.modal-content {
+    display: flex;
+    background: beige;
+    margin: 50px auto;
+    padding: 50px;
+    width: 35%;
+    height: auto;
+}
+
+.block-one {
+    width: 30%;
+}
+.block-two {
+    position: relative;
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+}
+
+.imgMovieModal {
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+.fav-year {
+    display: flex;
+    position: relative;
+}
+
+.fav-year .favStar {
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 2;
+    width: 30px;
+    height: 30px;
+    background-size: contain;
+}
+
+
+
+.genreList{
+    display: flex;
+    flex-wrap: wrap;
+}
+.genre {
+    background: burlywood;
+    border-radius: 7px;
+    margin: 12px;
+    padding: 5px;
+    width: 55px;
+}
+.star-modal {
+    background-image: url(img/fav.png);
+    background-repeat: no-repeat;
+    top: 5px;
+    left: 125px;
+    z-index: 2;
+    width: 30px;
+    height: 30px;
+    background-size: contain;
+}
+
+.btn-close-modal {
+    position: absolute;
+    top: -35px;
+    left: 450px;
+}
+
+[data-modal] {
+    cursor: pointer;
+}
+
+.description, .director, .starring {
+    margin: 12px;
+}
+
+
