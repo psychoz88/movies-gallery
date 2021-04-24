@@ -61,7 +61,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
   cards();
 
-  function openModal(modalSelector) {
+  function openModal(modalSelector, identificator) {
     const modal = document.querySelector(modalSelector);
     modal.classList.add("show");
     modal.classList.remove("hide");
@@ -109,34 +109,34 @@ window.addEventListener("DOMContentLoaded", () => {
             }
         
             render() {
-            const element = document.createElement("div");
-            if (this.classes.length === 0) {
-                this.element = "modal-content";
-                element.classList.add(this.element);
-            } else {
-                this.classes.forEach((className) => element.classList.add(className));
-            }
-            element.innerHTML = `
-                    <div class="block-one">
-                    <img class="imgMovieModal" src="${this.img}">
-                    <div class="fav-year">
-                        <button data-id-star="${this.id}" class="favStar"></button>
-                        <p class="yearMovie">${this.year}</p>
-                    </div>
-                    <div class="genreList">
-                        <p class="genre">${this.genres[0]}</p>
-                        <p class="genre">${this.genres[1]}</p>
-                    </div>
-                    </div>
-                    <div class="block-two">
-                        <p class="nameMovie">${this.name}</p>
-                        <p class="description">Description: ${this.description}</p>
-                        <p class="director">Director: ${this.director}</p>
-                        <p class="starring">Starring: ${this.starring}</p>
-                        <button data-close class='btn-close-modal'>X</button>
-                    </div>
-                    `;
-            this.parent.after(element);
+                const element = document.createElement("div");
+                if (this.classes.length === 0) {
+                    this.element = "modal-content";
+                    element.classList.add(this.element);
+                } else {
+                    this.classes.forEach((className) => element.classList.add(className));
+                }
+                element.innerHTML = `
+                        <div class="block-one">
+                        <img class="imgMovieModal" src="${this.img}">
+                        <div class="fav-year">
+                            <button data-id-star-modal="${this.id}" class="favStarModal"></button>
+                            <p class="yearMovie">${this.year}</p>
+                        </div>
+                        <div class="genreList">
+                            <p class="genre">${this.genres[0]}</p>
+                            <p class="genre">${this.genres[1]}</p>
+                        </div>
+                        </div>
+                        <div class="block-two">
+                            <p class="nameMovie">${this.name}</p>
+                            <p class="description">Description: ${this.description}</p>
+                            <p class="director">Director: ${this.director}</p>
+                            <p class="starring">Starring: ${this.starring}</p>
+                            <button data-close class='btn-close-modal'>X</button>
+                        </div>
+                        `;
+                this.parent.after(element);
 
             } // render
 
@@ -156,9 +156,9 @@ window.addEventListener("DOMContentLoaded", () => {
             data.forEach(({ id, name, img, description, year, genres: [first, second, ...allGenres], director, starring }) => {
                 if (id == identificator) {
                     new ModalItem(id, name, img, description, year, [first, second, ...allGenres], director, starring, ".noDivModal").render();
-                    makeFavorite(identificator);
+                    makeFavoriteInModal(identificator)
                 }; // if
-                openModal(modalSelector);
+                openModal(modalSelector, identificator);
             });
         }); // getResourse .then
 
@@ -180,27 +180,57 @@ window.addEventListener("DOMContentLoaded", () => {
   } // modal
 
 
-
-  function makeFavorite(idz) {
-    makeFavList(idz)
-    const btn = document.querySelectorAll('.favStar');
+  function makeFavoriteInModal(idz) {
+    const btn = document.querySelectorAll('.favStarModal');
 
     btn.forEach((item) => {
-        let idx = item.closest('div').id;
-        let dataIdStar = item.dataset.idStar; 
-        if (localStorage.getItem(`${idz}`) == idx || localStorage.getItem(`${idz}`) == dataIdStar) {
+        let dataIdStar = item.dataset.idStarModal; 
+        if ( localStorage.getItem(`${idz}`) == dataIdStar) {
             item.classList.add('star');
-        }
-    })
-    
+        } 
+    });
 
     btn.forEach((item) => {
         item.addEventListener('click', (e) => {
             e.stopPropagation()
-            idx = e.target.closest('div').id;
-            let dataIdStar = item.dataset.idStar; 
+            let dataIdStar = item.dataset.idStarModal; 
+            if (dataIdStar == idz) {
+                if (localStorage.getItem(`${idz}`) == dataIdStar && item.getAttribute('class') == 'favStarModal star') {
+                    const removeItem = document.querySelector(`[data-id="${idz}"]`),
+                    removeStar = document.querySelector(`[data-id-star="${idz}"]`);
+                    removeStar.classList.remove('star');
+                    item.classList.remove('star');
+                    localStorage.removeItem(`${idz}`);
+                    removeItem.remove();
+                } else {
+                    localStorage.setItem(`${idz}`, dataIdStar);
+                    item.classList.add('star');
+                    const addStar = document.querySelector(`[data-id-star="${idz}"]`);
+                    addStar.classList.add('star');
+                }
+                makeFavList(idz);
+            }
+        })
+    });
+  } // makeFavoriteInModal
+
+
+  function makeFavorite(idz) {
+    const btn = document.querySelectorAll('.favStar');
+
+    btn.forEach((item) => {
+        let idx = item.closest('div').id;
+        if ( localStorage.getItem(`${idz}`) == idx) {
+            item.classList.add('star');
+        }
+    });
+    
+    btn.forEach((item) => {
+        item.addEventListener('click', (e) => {
+            e.stopPropagation()
+            let idx = e.target.closest('div').id;
             if (idx == idz) {
-                if (localStorage.getItem(`${idz}`) == idx && item.getAttribute('class') == 'favStar star' || localStorage.getItem(`${idz}`) == dataIdStar){
+                if (localStorage.getItem(`${idz}`) == idx && item.getAttribute('class') == 'favStar star'){
                     const removeItem = document.querySelector(`[data-id="${idz}"]`);
                     item.classList.remove('star');
                     localStorage.removeItem(`${idz}`);

@@ -45,6 +45,9 @@ body {
 .favStar {
     background-image: url(img/no-fav.png);
 }
+.favStarModal {
+    background-image: url(img/no-fav.png);
+}
 
 .star {
     background-image: url(img/fav.png);
@@ -157,7 +160,7 @@ body {
     position: relative;
 }
 
-.fav-year .favStar {
+.favStarModal {
     background-repeat: no-repeat;
     position: absolute;
     top: 0px;
