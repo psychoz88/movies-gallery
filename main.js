@@ -133,7 +133,7 @@ window.addEventListener("DOMContentLoaded", () => {
                             <p class="description">Description: ${this.description}</p>
                             <p class="director">Director: ${this.director}</p>
                             <p class="starring">Starring: ${this.starring}</p>
-                            <button data-close class='btn-close-modal'>X</button>
+                            <span data-close class='btn-close-modal'>×</span>
                         </div>
                         `;
                 this.parent.after(element);
@@ -270,15 +270,15 @@ window.addEventListener("DOMContentLoaded", () => {
             render() {
             const element = document.createElement("div");
             if (this.classes.length === 0) {
-                this.element = "favoriteList";
+                this.element = "favList";
                 element.classList.add(this.element);
             } else {
                 this.classes.forEach((className) => element.classList.add(className));
             }
             element.innerHTML = `
                 <div data-id="${this.id}" class="listItem">
-                    <a href="#">${this.name}</a>
-                    <button class="delete">X</button>
+                    <span>${this.name}</span>
+                    <span class="delete">×</span>
                 </div>
                 `;
             this.parent.after(element);
